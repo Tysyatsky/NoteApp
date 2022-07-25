@@ -1,18 +1,10 @@
 ﻿
 
-
-
-
-
-
-
 class Buffer
 {
     int buf_size;
 
-    string root_rep_path;
-
-    public Note[] inner_buffer;
+    Note[] inner_buffer;
 
     public int BufSize {
         get { return buf_size; }
@@ -23,9 +15,16 @@ class Buffer
     {
         inner_buffer = new Note[size];
         buf_size = size;
-        root_rep_path = @"D:\на збереження\git\test_c#\note_app\note_app\data";
     }
-
+    public void ListAllNames()
+    {
+        Console.WriteLine("All names listed under: ");
+        
+        for (int i = 0; i < Note.Note_count; i++)
+        {
+            Console.WriteLine(inner_buffer[i].Name);
+        }
+    } 
     public void CreateNote()
     {
         Console.WriteLine("Enter name: ");
@@ -34,14 +33,8 @@ class Buffer
         Console.WriteLine("Enter text in your file: ");
         string temp_text = Console.ReadLine();
         temp_text ??= "text";
-        Console.WriteLine("Number of Notes: " + Note.Note_count);
-        inner_buffer[Note.Note_count] = new Note(temp_name, temp_text, false);
-        Console.WriteLine("Number of Notes: " + Note.Note_count);
-        if (inner_buffer[Note.Note_count - 1] == null)
-        {
-            Console.WriteLine("Failed Note creation!");
-            return;
-        }
+
+        ArrayManage.InsertID(ref inner_buffer, Note.Note_count, new Note(temp_name, temp_text, false));
     }
     public int FindID(string name)
     {
@@ -60,6 +53,14 @@ class Buffer
             }
         }
         return null;
+    }
+    public bool DeleteNote(string name)
+    {
+        if (name == null) return false;
+        int IDtoDelete = FindID(name);
+        if (IDtoDelete == -1) return false;
+        ArrayManage.DeleteID(ref inner_buffer, IDtoDelete);
+        return true;
     }
 
 }
