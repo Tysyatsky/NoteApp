@@ -3,7 +3,7 @@
 
 static class ArrayManage
 {   
-    static void resize(ref Note[] temp_arr, int new_size)
+    public static void Resize(ref Note[] temp_arr, int new_size)
     {
 
         Note[] buff = temp_arr;
@@ -26,7 +26,7 @@ static class ArrayManage
 
     static void InsertBottom(ref Note[] temp_arr, Note item)
     {
-        resize(ref temp_arr, temp_arr.Length + 1);
+        Resize(ref temp_arr, temp_arr.Length + 1);
         temp_arr[temp_arr.Length - 1] = item;
     }
 
@@ -42,7 +42,7 @@ static class ArrayManage
             InsertTop(ref temp_arr, item);
             return;
         }
-        if (id >= temp_arr.Length - 1)
+        if (id >= temp_arr.Length)
         {
             InsertBottom(ref temp_arr, item);
             return;
@@ -66,11 +66,13 @@ static class ArrayManage
         Note[] new_arr = new Note[temp_arr.Length - 1];
         Array.Copy(temp_arr, 1, new_arr, 0, temp_arr.Length - 1);
         temp_arr = new_arr;
+        Note.Note_count--;
     }
 
     static void DeleteBottom(ref Note[] temp_arr)
     {
-        resize(ref temp_arr, temp_arr.Length - 1);
+        Resize(ref temp_arr, temp_arr.Length - 1);
+        Note.Note_count--;
     }
 
     public static void DeleteID(ref Note[] temp_arr, int id)
@@ -101,5 +103,6 @@ static class ArrayManage
             temp[i] = temp_arr[j];
         }
         temp_arr = temp;
+        Note.Note_count--;
     }
 } 

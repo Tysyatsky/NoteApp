@@ -19,7 +19,7 @@ static class Tests
         Buffer myBuf = new Buffer(1);
         Menu mainMenu = new Menu();
         mainMenu.Start();
-        if (myBuf == null) { Console.WriteLine("Error on creation"); }
+        if (myBuf == null) { Console.WriteLine("Error on creation"); return; }
         else { Console.WriteLine("All good"); }
         mainMenu.NewNote();
         myBuf.ListAllNames();

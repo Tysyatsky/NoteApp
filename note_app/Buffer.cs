@@ -46,11 +46,9 @@ class Buffer
     }
     public Note FindNote(string name)
     {
-        foreach (Note note in inner_buffer) { 
-            if (note.Name == name)
-            {
-                return note;
-            }
+        for (int i = 0; i < inner_buffer.Length; i++)
+        {
+            if (inner_buffer[i].Name == name) return inner_buffer[i];
         }
         return null;
     }
