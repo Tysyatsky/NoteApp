@@ -12,11 +12,19 @@ static class Extract
     
     static public void AllFileExport(Note[] notes)
     {
-        foreach (Note note in notes)
-        {
-            FileExport(note);
+        if (notes == null) return;
+        else if (notes[0] == null) return;
+        else
+        {   
+            for (int i = 0; i < notes.Length; i++)
+            {
+                if (notes[i] == null) continue;
+                else
+                {
+                    FileExport(notes[i]);
+                }
+            }
         }
-        return;
     }
     static public void FileExport(Note temp){   
         string path = Path.Combine(root_rep_path, temp.Name);
@@ -28,7 +36,7 @@ static class Extract
         return;
     }
     static public void FileRead(Note temp)
-    {
-        // поки тут нічого не буде 
+    {  
+        //StreamReader sr = new StreamReader(root_rep_path);
     }
 }

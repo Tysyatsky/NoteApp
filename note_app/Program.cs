@@ -13,16 +13,19 @@ class Menu
         /*
          switch case with
         
+        5. ReadAll in buffer
         1. Add note
         2. Delete note
         3. Export by name
         4. Export all
+        
+        0. Exit
         */
-        Console.WriteLine("Menu:\n1. Add note\n2. Delete note\n3. Export by name\n4. Export all");
+        Console.WriteLine("Menu:\n1. Add note\n2. Delete note\n3. Export by name\n4. Export all\n0. Exit");
         string tempChoose = Console.ReadLine();
         int choose = 0;
 
-        if (int.TryParse(tempChoose, out choose)) { Console.WriteLine("Proceding");}
+        if (int.TryParse(tempChoose, out choose)) { Console.WriteLine("---");}
         else
         {
             Console.WriteLine("Enter number...");
@@ -46,6 +49,10 @@ class Menu
                     string tName = Console.ReadLine();
                     tName ??= "def.txt";
                     Note tNote = innerBuffer.FindNote(tName);
+                    if(tNote == null)
+                    {
+                        break;
+                    }
                     try
                     {
                         Extract.FileExport(tNote);
@@ -59,8 +66,12 @@ class Menu
                 }
             case 4:
                 {
-                    // none
+                    Extract.AllFileExport(innerBuffer.BufferAccess());
                     break;
+                }
+            case 0:
+                {
+                    return;
                 }
             default:
                 {

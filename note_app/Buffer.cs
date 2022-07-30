@@ -16,6 +16,10 @@ class Buffer
         inner_buffer = new Note[size];
         buf_size = size;
     }
+    public Note[] BufferAccess()
+    {
+        return inner_buffer;
+    }
     public void ListAllNames()
     {
         Console.WriteLine("All names listed under: ");
@@ -35,11 +39,13 @@ class Buffer
         temp_text ??= "text";
 
         ArrayManage.InsertID(ref inner_buffer, Note.Note_count, new Note(temp_name, temp_text, false));
+        BufSize = inner_buffer.Length;
     }
     public int FindID(string name)
     {
         for (int i = 0; i < inner_buffer.Length; i++)
         {
+            if (inner_buffer[i] == null) return -1;
             if (inner_buffer[i].Name == name) return i;
         }
         return -1;
@@ -47,7 +53,8 @@ class Buffer
     public Note FindNote(string name)
     {
         for (int i = 0; i < inner_buffer.Length; i++)
-        {
+        {   
+            if (inner_buffer[i] == null) return null;
             if (inner_buffer[i].Name == name) return inner_buffer[i];
         }
         return null;
@@ -58,6 +65,7 @@ class Buffer
         int IDtoDelete = FindID(name);
         if (IDtoDelete == -1) return false;
         ArrayManage.DeleteID(ref inner_buffer, IDtoDelete);
+        BufSize = inner_buffer.Length;
         return true;
     }
 
