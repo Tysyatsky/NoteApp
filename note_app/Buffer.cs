@@ -3,9 +3,7 @@
 class Buffer
 {
     int buf_size;
-
-    Note[] inner_buffer;
-
+    List<Note> inner_list;
     public int BufSize {
         get { return buf_size; }
         set { buf_size = value; }
@@ -13,60 +11,83 @@ class Buffer
 
     public Buffer(int size)
     {
-        inner_buffer = new Note[size];
         buf_size = size;
+        inner_list = new List<Note>();
+        ReadBuffer();
     }
-    public Note[] BufferAccess()
-    {
-        return inner_buffer;
-    }
+
     public void ListAllNames()
     {
         Console.WriteLine("All names listed under: ");
         
-        for (int i = 0; i < Note.Note_count; i++)
+        foreach (Note note in inner_list)
         {
-            Console.WriteLine(inner_buffer[i].Name);
+            Console.WriteLine(note.Name);
         }
     } 
     public void CreateNote()
     {
         Console.WriteLine("Enter name: ");
         string temp_name = Console.ReadLine() + ".txt";
-        temp_name ??= "default" + Note.Note_count + ".txt";
+        temp_name ??= "default.txt";
         Console.WriteLine("Enter text in your file: ");
         string temp_text = Console.ReadLine();
         temp_text ??= "text";
+        inner_list.Add(new Note(temp_name, temp_text, false));
+        BufSize = inner_list.Count;
 
-        ArrayManage.InsertID(ref inner_buffer, Note.Note_count, new Note(temp_name, temp_text, false));
-        BufSize = inner_buffer.Length;
-    }
-    public int FindID(string name)
-    {
-        for (int i = 0; i < inner_buffer.Length; i++)
-        {
-            if (inner_buffer[i] == null) return -1;
-            if (inner_buffer[i].Name == name) return i;
-        }
-        return -1;
     }
     public Note FindNote(string name)
     {
-        for (int i = 0; i < inner_buffer.Length; i++)
+        foreach (Note note in inner_list)
         {   
-            if (inner_buffer[i] == null) return null;
-            if (inner_buffer[i].Name == name) return inner_buffer[i];
+            if (note.Name == name) return note;
         }
         return null;
     }
     public bool DeleteNote(string name)
     {
         if (name == null) return false;
-        int IDtoDelete = FindID(name);
-        if (IDtoDelete == -1) return false;
-        ArrayManage.DeleteID(ref inner_buffer, IDtoDelete);
-        BufSize = inner_buffer.Length;
+        Note IDtoDelete = FindNote(name);
+        if (IDtoDelete == null) return false;
+        inner_list.Remove(IDtoDelete);
+        BufSize = inner_list.Count;
+
         return true;
     }
+    public bool ReadBuffer()
+    {
+        inner_list.Clear();
+        Extract.AllFileImport(inner_list);
+        return true;
+    }
+    public bool WriteBuffer(string tName)
+    {
 
+        Note tNote = FindNote(tName);
+        if (tNote == null)
+        {
+            return false;
+        }
+        try
+        {
+            Extract.FileExport(tNote);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        DeleteNote(tNote.Name);
+        return true;
+    }
+    public bool WriteAllBuffer()
+    {   
+        if (inner_list != null)
+        {
+            Extract.AllFileExport(inner_list);
+            inner_list.Clear();
+            return true;
+        }
+        else return false;
+    }
 }

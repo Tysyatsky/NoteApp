@@ -10,23 +10,44 @@ static class Extract
 {
     static string root_rep_path = @"D:\на збереження\git\test_c#\note_app\note_app\data";
     
-    static public void AllFileExport(Note[] notes)
+    static public void AllFileExport(List<Note> notes)
     {
+
         if (notes == null) return;
-        else if (notes[0] == null) return;
         else
         {   
-            for (int i = 0; i < notes.Length; i++)
+            foreach (Note note in notes)
             {
-                if (notes[i] == null) continue;
+                if (note == null) continue;
                 else
                 {
-                    FileExport(notes[i]);
+                    FileExport(note);
                 }
             }
         }
     }
-    static public void FileExport(Note temp){   
+    static public void AllFileImport(List<Note> notes) 
+    {
+
+        foreach (string file in Directory.EnumerateFiles(root_rep_path, "*.txt"))
+        {
+            string contents = File.ReadAllText(file);
+            string name = Path.GetFileName(file);
+            Note note = FileImport(name, contents);
+            if (note == null) return;
+            else
+            {
+                notes.Add(note);
+            }
+        }
+        string[] files = Directory.GetFiles(root_rep_path);
+        foreach (string file in files)
+        {
+            File.Delete(file);
+        }
+    }
+    static public void FileExport(Note temp)
+    {   
         string path = Path.Combine(root_rep_path, temp.Name);
         StreamWriter sw = File.CreateText(path);
 
@@ -35,8 +56,9 @@ static class Extract
 
         return;
     }
-    static public void FileRead(Note temp)
-    {  
-        //StreamReader sr = new StreamReader(root_rep_path);
+    static public Note FileImport(string name, string contents)
+    {
+        Note temp = new Note(name, contents, false);
+        return temp;
     }
 }

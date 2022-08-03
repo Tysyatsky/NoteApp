@@ -21,7 +21,7 @@ static class Tests
         mainMenu.Start();
         if (myBuf == null) { Console.WriteLine("Error on creation"); return; }
         else { Console.WriteLine("All good"); }
-        mainMenu.NewNote();
+        //mainMenu.NewNote(); // commented due to new protection level
         myBuf.ListAllNames();
     }
 }
