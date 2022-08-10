@@ -33,7 +33,13 @@ class Buffer
         Console.WriteLine("Enter text in your file: ");
         string temp_text = Console.ReadLine();
         temp_text ??= "text";
-        inner_list.Add(new Note(temp_name, temp_text, false));
+        Console.WriteLine("Enter 1 for editing or 0 for not editing:");
+        string permision = Console.ReadLine();
+        bool perm;
+        if (permision == "1") perm = true;
+        else perm = false;
+        
+        inner_list.Add(new Note(temp_name, temp_text, perm));
         BufSize = inner_list.Count;
 
     }
@@ -53,6 +59,61 @@ class Buffer
         inner_list.Remove(IDtoDelete);
         BufSize = inner_list.Count;
 
+        return true;
+    }
+    public bool EditNote(string name)
+    {
+        if (name == null) return false;
+        Note ToEdit = FindNote(name);
+        if (ToEdit == null) return false;
+        if (ToEdit.Perm == false)
+        {
+            Console.WriteLine("\nPermission denied...");
+            return false;
+        }
+        Console.WriteLine("Do you like to change name, text or both?\n1. Name\n2. Text\n3. Both");
+        string choose = Console.ReadLine();
+        if (choose == null) return false;
+        int edit = 0;
+        if (!int.TryParse(choose, out edit))
+        {
+            return false;
+        }
+        switch (edit)
+        {
+            case 1:
+                {
+                    Console.WriteLine("Enter new name: ");
+                    string newName = Console.ReadLine();
+                    if (newName == null) return false;
+                    if (newName.Length == 0) return false;
+                    ToEdit.Name = newName;
+                    break;
+                }
+            case 2:
+                {
+                    Console.WriteLine("Enter new text: ");
+                    string newText = Console.ReadLine();
+                    if (newText == null) return false;
+                    if (newText.Length == 0) return false;
+                    ToEdit.Text = newText;
+                    break;
+                }
+            case 3:
+                {
+                    Console.WriteLine("Enter new name: ");
+                    string newName = Console.ReadLine();
+                    if (newName == null) return false;
+                    if (newName.Length == 0) return false;
+                    ToEdit.Name = newName;
+                    Console.WriteLine("Enter new text: ");
+                    string newText = Console.ReadLine();
+                    if (newText == null) return false;
+                    if (newText.Length == 0) return false;
+                    ToEdit.Text = newText;
+                    break;
+                }
+        }
         return true;
     }
     public bool ReadBuffer()

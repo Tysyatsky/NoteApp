@@ -20,7 +20,7 @@ class Menu
 
         0. Exit
         */
-        Console.WriteLine("Menu:\n1. Add note\n2. Delete note\n0. Save and quit");
+        Console.WriteLine("Menu:\n1. Add note\n2. Delete note\n3. Edit note\n0. Save and quit");
         string tempChoose = Console.ReadLine();
         int choose = 0;
 
@@ -41,6 +41,11 @@ class Menu
             case 2:
                 {   
                     DeleteNote();
+                    break;
+                }
+            case 3:
+                {
+                    EditNote();
                     break;
                 }
             case 0:
@@ -72,7 +77,30 @@ class Menu
         else { Console.WriteLine("Deletion is corrupted"); }
         
     }
+    private void EditNote()
+    {   
+        if (innerBuffer.BufSize == 0) { 
+            Console.WriteLine("No notes to edit\nCreate new? (y/n)"); 
+            string perm = Console.ReadLine();
+            if (perm == null) return;
+            if (perm.ToLower() == "y")
+            {
+                NewNote();
+                return;
+            }
+        }
+        else
+        {
+            Console.WriteLine("All nodes is buffer: ");
+            innerBuffer.ListAllNames();
+            Console.WriteLine("Enter name of the Note to edit: ");
+            string name = Console.ReadLine();
+            if (name == null) return;
+            if (innerBuffer.EditNote(name)) { Console.WriteLine("Edit is succesful"); }
+            else { Console.WriteLine("Edit is corrupted"); }
+        }
 
+    }
     private void FileAllExctractBuf()
     {   
         innerBuffer.WriteAllBuffer();
