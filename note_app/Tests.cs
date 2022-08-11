@@ -11,7 +11,7 @@ static class Tests
         myBuf.CreateNote();
         myBuf.CreateNote();
         
-        myBuf.ListAllNames();
+        myBuf.ListAllNames(true);
         
     }
     public static void Test2()
@@ -22,6 +22,6 @@ static class Tests
         if (myBuf == null) { Console.WriteLine("Error on creation"); return; }
         else { Console.WriteLine("All good"); }
         //mainMenu.NewNote(); // commented due to new protection level
-        myBuf.ListAllNames();
+      //  myBuf.ListAllNames();
     }
 }

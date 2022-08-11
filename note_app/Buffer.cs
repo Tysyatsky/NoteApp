@@ -16,14 +16,35 @@ class Buffer
         ReadBuffer();
     }
 
-    public void ListAllNames()
+    public bool ListAllNames(bool admin)
     {
-        Console.WriteLine("All names listed under: ");
+        //Console.WriteLine("All names listed under: ");
         
-        foreach (Note note in inner_list)
+        if (!admin)
         {
-            Console.WriteLine(note.Name);
+            List<Note> notesWithPerm = new List<Note>();
+            notesWithPerm = inner_list.Where(note => note.WritePerm == true).ToList();
+            if (notesWithPerm.Count == 0)
+            {
+                Console.WriteLine("No notes for Guest permission");
+                return false;
+            }
+            foreach (Note note in notesWithPerm)
+            {
+                Console.WriteLine(note.Name);
+            }
+            return true;
         }
+        else
+        {   
+            foreach (Note note in inner_list)
+            {
+                Console.WriteLine(note.Name);
+            }
+            return true;
+        }
+
+
     } 
     public void CreateNote()
     {
@@ -34,12 +55,17 @@ class Buffer
         string temp_text = Console.ReadLine();
         temp_text ??= "text";
         Console.WriteLine("Enter 1 for editing or 0 for not editing:");
-        string permision = Console.ReadLine();
-        bool perm;
-        if (permision == "1") perm = true;
-        else perm = false;
-        
-        inner_list.Add(new Note(temp_name, temp_text, perm));
+        string permisionW = Console.ReadLine();
+        bool permW;
+        if (permisionW == "1") permW = true;
+        else permW = false;
+        Console.WriteLine("Enter 1 for reading or 0 for not reading:\n Note: applies only for guest reading!");
+        string permisionR = Console.ReadLine();
+        bool permR;
+        if (permisionR == "1") permR = true;
+        else permR = false;
+
+        inner_list.Add(new Note(temp_name, temp_text, permR, permW));
         BufSize = inner_list.Count;
 
     }
@@ -61,12 +87,16 @@ class Buffer
 
         return true;
     }
-    public bool EditNote(string name)
+    public bool EditNote(string name, bool admin)
     {
         if (name == null) return false;
         Note ToEdit = FindNote(name);
         if (ToEdit == null) return false;
-        if (ToEdit.Perm == false)
+        if (admin)
+        {
+            Console.WriteLine("\nAdmin permission succeed!");
+        }
+        else if (ToEdit.WritePerm == false)
         {
             Console.WriteLine("\nPermission denied...");
             return false;

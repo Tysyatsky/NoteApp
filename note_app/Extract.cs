@@ -58,7 +58,7 @@ static class Extract
     }
     static public Note FileImport(string name, string contents)
     {
-        Note temp = new Note(name, contents, false);
+        Note temp = new Note(name, contents, true, false);
         return temp;
     }
 }

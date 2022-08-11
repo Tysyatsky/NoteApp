@@ -4,7 +4,24 @@
 class Menu
 {
     Buffer innerBuffer = new Buffer(1);
-    
+    string log = "admin";
+    string password = "admin";
+    bool admin = false;
+
+    public Menu()
+    {
+        Login();
+    }
+    public void Login()
+    {
+        Console.Write("Enter Login: ");
+        string login = Console.ReadLine();
+        Console.Write("Enter Password: ");
+        string password = Console.ReadLine();
+        if (login == null || password == null) { admin = false; }
+        if (login == log && password == this.password) { Console.WriteLine("Hello Admin!"); admin = true; }
+        else { Console.WriteLine("Hello Guest!"); admin = false; }
+    }
     public void Start()
     {
         Console.WriteLine("Note program by Tysyatsky");
@@ -69,7 +86,7 @@ class Menu
     private void DeleteNote()
     {
         Console.WriteLine("All nodes is buffer: ");
-        innerBuffer.ListAllNames();
+        innerBuffer.ListAllNames(admin);
         Console.WriteLine("Enter name of the Note to delete: ");
         string name = Console.ReadLine();
         if (name == null) { Console.WriteLine("Error: Invalid name"); return; }
@@ -91,13 +108,19 @@ class Menu
         }
         else
         {
-            Console.WriteLine("All nodes is buffer: ");
-            innerBuffer.ListAllNames();
-            Console.WriteLine("Enter name of the Note to edit: ");
-            string name = Console.ReadLine();
-            if (name == null) return;
-            if (innerBuffer.EditNote(name)) { Console.WriteLine("Edit is succesful"); }
-            else { Console.WriteLine("Edit is corrupted"); }
+            
+            if(innerBuffer.ListAllNames(admin))
+            {
+                Console.WriteLine("Enter name of the Note to edit: ");
+                string name = Console.ReadLine();
+                if (name == null) return;
+                if (innerBuffer.EditNote(name, admin)) { Console.WriteLine("Edit is succesful"); }
+                else { Console.WriteLine("Edit is corrupted"); }
+            }
+            else
+            {
+                return;
+            }
         }
 
     }
