@@ -61,4 +61,17 @@ static class Extract
         Note temp = new Note(name, contents, true, false);
         return temp;
     }
+    static public void WriteUserData(List<User> userData)
+    {
+        string path = Path.Combine(root_rep_path, "userdatabase.txt");
+        StreamWriter sw = File.CreateText(path);
+
+        foreach (User user in userData)
+        {
+            sw.WriteLine(user.Login);
+            sw.WriteLine(user.Password);
+        }
+        sw.Close();
+    }
+
 }
