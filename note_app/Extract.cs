@@ -8,7 +8,16 @@
 
 static class Extract 
 {
-    static string root_rep_path = @"D:\на збереження\git\test_c#\note_app\note_app\data";
+    //static string root_rep_path = @"..\..\..\data";
+
+    static string getRelativePath()
+    {
+       // string newPath;
+        string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string userFile = Path.Combine(CurrentDirectory, @"..\..\..\data");
+        string userFilePath = Path.GetFullPath(userFile);
+        return userFilePath;
+    }
     
     static public void AllFileExport(List<Note> notes)
     {
@@ -29,7 +38,7 @@ static class Extract
     static public void AllFileImport(List<Note> notes) 
     {
 
-        foreach (string file in Directory.EnumerateFiles(root_rep_path, "*.txt"))
+        foreach (string file in Directory.EnumerateFiles(getRelativePath(), " *.txt"))
         {
             string contents = File.ReadAllText(file);
             string name = Path.GetFileName(file);
@@ -40,7 +49,7 @@ static class Extract
                 notes.Add(note);
             }
         }
-        string[] files = Directory.GetFiles(root_rep_path);
+        string[] files = Directory.GetFiles(getRelativePath());
         foreach (string file in files)
         {
             File.Delete(file);
@@ -48,7 +57,7 @@ static class Extract
     }
     static public void FileExport(Note temp)
     {   
-        string path = Path.Combine(root_rep_path, temp.Name);
+        string path = Path.Combine(getRelativePath(), temp.Name);
         StreamWriter sw = File.CreateText(path);
 
         sw.Write(temp.Text);
@@ -63,8 +72,11 @@ static class Extract
     }
     static public void WriteUserData(List<User> userData)
     {
-        string path = Path.Combine(root_rep_path, "userdatabase.txt");
-        StreamWriter sw = File.CreateText(path);
+       
+        string userFile = Path.Combine(getRelativePath(), "userdatabase.txt");
+        string userFilePath = Path.GetFullPath(userFile);
+
+        StreamWriter sw = File.CreateText(userFilePath);
 
         foreach (User user in userData)
         {

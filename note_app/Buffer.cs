@@ -18,8 +18,6 @@ class Buffer
 
     public bool ListAllNames(bool admin)
     {
-        //Console.WriteLine("All names listed under: ");
-        
         if (!admin)
         {
             List<Note> notesWithPerm = new List<Note>();

@@ -6,9 +6,6 @@ class Note
     public string Text { get; set; }
     public string Name { get; set; }
 
-    //public static int Note_count = 0;
-
-    //private bool Edit_per;
     private bool Read_per;
     private bool Write_per;
 
@@ -16,7 +13,6 @@ class Note
     {
         Text = String.Empty;
         Name = String.Empty;
-        //Edit_per = true;
         Read_per = true;
         Write_per = true;
     }
