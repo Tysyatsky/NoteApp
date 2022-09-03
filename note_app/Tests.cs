@@ -10,9 +10,9 @@ static class Tests
         myBuf.CreateNote();
         myBuf.CreateNote();
         myBuf.CreateNote();
-        
+
         myBuf.ListAllNames(true);
-        
+
     }
     public static void Test2()
     {

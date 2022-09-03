@@ -4,7 +4,8 @@ class Buffer
 {
     int buf_size;
     List<Note> inner_list;
-    public int BufSize {
+    public int BufSize
+    {
         get { return buf_size; }
         set { buf_size = value; }
     }
@@ -34,7 +35,7 @@ class Buffer
             return true;
         }
         else
-        {   
+        {
             foreach (Note note in inner_list)
             {
                 Console.WriteLine(note.Name);
@@ -43,7 +44,7 @@ class Buffer
         }
 
 
-    } 
+    }
     public void CreateNote()
     {
         Console.WriteLine("Enter name: ");
@@ -70,7 +71,7 @@ class Buffer
     public Note FindNote(string name)
     {
         foreach (Note note in inner_list)
-        {   
+        {
             if (note.Name == name) return note;
         }
         return null;
@@ -170,7 +171,7 @@ class Buffer
         return true;
     }
     public bool WriteAllBuffer()
-    {   
+    {
         if (inner_list != null)
         {
             Extract.AllFileExport(inner_list);

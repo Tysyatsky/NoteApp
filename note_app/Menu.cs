@@ -25,7 +25,7 @@ class Menu
     public void Start()
     {
         Console.WriteLine("Note program by Tysyatsky");
-        
+
         /*
          switch case with
         
@@ -41,22 +41,22 @@ class Menu
         string tempChoose = Console.ReadLine();
         int choose = 0;
 
-        if (int.TryParse(tempChoose, out choose)) { Console.WriteLine("---");}
+        if (int.TryParse(tempChoose, out choose)) { Console.WriteLine("---"); }
         else
         {
             Console.WriteLine("Enter number...");
             return;
         }
-        switch(choose)
+        switch (choose)
         {
 
             case 1:
-                {   
+                {
                     NewNote();
                     break;
                 }
             case 2:
-                {   
+                {
                     DeleteNote();
                     break;
                 }
@@ -78,7 +78,7 @@ class Menu
         Start();
     }
 
-    private void NewNote() 
+    private void NewNote()
     {
         innerBuffer.CreateNote();
         Console.WriteLine("New note created!");
@@ -92,12 +92,13 @@ class Menu
         if (name == null) { Console.WriteLine("Error: Invalid name"); return; }
         if (innerBuffer.DeleteNote(name)) { Console.WriteLine("Deletion complete!"); }
         else { Console.WriteLine("Deletion is corrupted"); }
-        
+
     }
     private void EditNote()
-    {   
-        if (innerBuffer.BufSize == 0) { 
-            Console.WriteLine("No notes to edit\nCreate new? (y/n)"); 
+    {
+        if (innerBuffer.BufSize == 0)
+        {
+            Console.WriteLine("No notes to edit\nCreate new? (y/n)");
             string perm = Console.ReadLine();
             if (perm == null) return;
             if (perm.ToLower() == "y")
@@ -108,8 +109,8 @@ class Menu
         }
         else
         {
-            
-            if(innerBuffer.ListAllNames(admin))
+
+            if (innerBuffer.ListAllNames(admin))
             {
                 Console.WriteLine("Enter name of the Note to edit: ");
                 string name = Console.ReadLine();
@@ -125,7 +126,7 @@ class Menu
 
     }
     private void FileAllExctractBuf()
-    {   
+    {
         innerBuffer.WriteAllBuffer();
     }
 }

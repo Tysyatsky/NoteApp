@@ -6,25 +6,25 @@
 
 
 
-static class Extract 
+static class Extract
 {
     //static string root_rep_path = @"..\..\..\data";
 
     static string getRelativePath()
     {
-       // string newPath;
+        // string newPath;
         string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
         string userFile = Path.Combine(CurrentDirectory, @"..\..\..\data");
         string userFilePath = Path.GetFullPath(userFile);
         return userFilePath;
     }
-    
+
     static public void AllFileExport(List<Note> notes)
     {
 
         if (notes == null) return;
         else
-        {   
+        {
             foreach (Note note in notes)
             {
                 if (note == null) continue;
@@ -35,7 +35,7 @@ static class Extract
             }
         }
     }
-    static public void AllFileImport(List<Note> notes) 
+    static public void AllFileImport(List<Note> notes)
     {
 
         foreach (string file in Directory.EnumerateFiles(getRelativePath(), " *.txt"))
@@ -56,7 +56,7 @@ static class Extract
         }
     }
     static public void FileExport(Note temp)
-    {   
+    {
         string path = Path.Combine(getRelativePath(), temp.Name);
         StreamWriter sw = File.CreateText(path);
 
@@ -72,7 +72,7 @@ static class Extract
     }
     static public void WriteUserData(List<User> userData)
     {
-       
+
         string userFile = Path.Combine(getRelativePath(), "userdatabase.txt");
         string userFilePath = Path.GetFullPath(userFile);
 
